@@ -20,18 +20,24 @@ There's not really an installation. Just extract the files to somewhere you can 
 ## Running
 If you try to run the initial PS1 script willy-nilly, a terminal/command window will open. Closing it can cause errors and such. Therefore, we recommend running the file using the `run.cmd` that's provided.
 
-## Run on Logon / Startup
-This is still on the to-do list as a checkbox item in the settings. But you can always use any of the three standard methods to manually create a way to have it run on login for now.
-* Place a shortcut in `%AppData%\Microsoft\Windows\Start Menu\Programs\Startup` to the `run.cmd` -OR-
-* Add a registry entry to the `run.cmd` in the Windows Registry at `HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run` -OR-
-* Create a task in the Task Scheduler.
-  * Triggers Tab:
-    *  Begin the task: `At log on`
-  * Action tab:
-    *  Program/script: `C:\Windows\System32\cmd.exe`
-    *  Add arguments: `/c START /min "" powershell.exe -WindowStyle Hidden -ExecutionPolicy ByPass -File "C:\Path\to\HKT Folder\hawtKoners.ps1"`
+## Screen Options and Configurations
+Corner layout design: Each configuration for each corner has three options:
+* Disabled
+* Keyboard Hotkey
+* PowerShell Command.
+Each option that's not in use becomes greyed-out until that radio button is selected. I found that helps in times of troubleshooting.
+
+![image](https://github.com/geektbee/hawtkoners/assets/16610859/de8271ac-e802-49dd-92f8-2753e8fbd70f)
+
+The "Identify" button in action, shows which Tab goes with which display. Does not conforms to what's in Windows Settings, because I couldn't figure out how they did that.
+
+![image](https://github.com/geektbee/hawtkoners/assets/16610859/664e943a-9b77-450e-8cab-91b99fcb4de5)
+
+The "Settings" tab: Mostly just a places for some little helpers and conveniences. 
+
+![image](https://github.com/geektbee/hawtkoners/assets/16610859/04c912b6-d11c-4537-b256-ae93bcbc0df1)
 
 ## Known Bugs and Issues
 * Some full-screen applications (games, in my experience) know how to ignore the HKT while it's running. Other full-screen applicaitons don't ignore it and can wind up throwing you for a loop. It seems to be related to Admin Vs. Limited privledges. 
   * Example: Genshin Impact, since it runs in elevated Administrator mode, ignores HKT since HKT runs in limited mode. But Destiny 2 runs in limited mode like HKT defaults. It took me a pretty minute to figure out why my Ghost menu kept activating....
-* ISSUE BY-DESIGN: Changing, adding, subtracting, etc monitors/screens, whether physically or in Windows Settings, has the potential to misconfigure HKT settings; you'll more than likely have to re-configure them.
+* ISSUE BY-DESIGN: Changing, adding, subtracting, etc monitors/screens, whether physically or in Windows Settings, has the potential to misconfigure HKT settings; you'll more than likely have to re-configure them if you add, change, and/or remove screens.
