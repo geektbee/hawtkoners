@@ -37,6 +37,9 @@ The "Settings" tab: Mostly just a places for some little helpers and convenience
 
 ![image](https://github.com/geektbee/hawtkoners/assets/16610859/04c912b6-d11c-4537-b256-ae93bcbc0df1)
 
+## Created and Tested On and For:
+* Windows 11 Pro x64
+
 ## Known Bugs and Issues
 * Some full-screen applications (games, in my experience) know how to ignore the HKT while it's running. Other full-screen applicaitons don't ignore it and can wind up throwing you for a loop. It seems to be related to Admin Vs. Limited privledges. 
   * Example: Genshin Impact, since it runs in elevated Administrator mode, ignores HKT since HKT runs in limited mode. But Destiny 2 runs in limited mode like HKT defaults. It took me a pretty minute to figure out why my Ghost menu kept activating....
