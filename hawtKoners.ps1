@@ -54,6 +54,7 @@ Set-Item -Path ENV:hktAppDataPath -Value "$dataDir"
 Set-Item -Path ENV:hktPids -Value "$dataDir/process.pid"
 Set-Item -Path ENV:hktWrkDir -Value "$wrkDir"
 Set-Item -Path ENV:hktAssets -Value "$wrkDir/assets"
+Set-Item -Path ENV:mainScript -Value $MyInvocation.MyCommand.Path
 
 # Before we go any further, see if the program is supposedly running right
 # now. Clear out any running process and start anew.
