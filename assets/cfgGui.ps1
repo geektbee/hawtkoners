@@ -485,6 +485,15 @@ If (!$ConfigFormPID) {
 	$cfgStart.Name = "setOpenCfg"
 	$cfgStart.Checked = If ($cfg.openCfg -eq 1) { $true } Else { $false }
 	$settingsBox.Controls.Add($cfgStart)
+	
+	#### Run on Startup
+	$cfgAutorun = New-Object System.Windows.Forms.CheckBox
+	$cfgAutorun.Location = New-Object System.Drawing.Point(12,128)
+	$cfgAutorun.Size = New-Object System.Drawing.Size(230,18)
+	$cfgAutorun.Text = "Run at login"
+	$cfgAutorun.Name = "setAutorun"
+	$cfgAutorun.Checked = If ( (Get-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Run -Name HawtKoners -ErrorAction SilentlyContinue).HawtKoners ) { $true } Else { $false }
+	$settingsBox.Controls.Add($cfgAutorun)
 
 	#### Portable Config Checkbox
 	# We actually don't want to show this section if the user can't write
@@ -496,20 +505,13 @@ If (!$ConfigFormPID) {
 		Remove-Item -Path "$testFil" -Force -Confirm:$false
 
 		$cfgPortable = New-Object System.Windows.Forms.CheckBox
-		$cfgPortable.Location = New-Object System.Drawing.Point(12,128)
+		$cfgPortable.Location = New-Object System.Drawing.Point(12,150)
 		$cfgPortable.Size = New-Object System.Drawing.Size(230,18)
 		$cfgPortable.Text = "Portable Configuration"
 		$cfgPortable.Name = "setPortable"
 		$cfgPortable.Checked = If (Test-Path "$($ENV:hktWrkDir)/config/settings.csv") { $true } Else { $false }
 		$settingsBox.Controls.Add($cfgPortable)
 	} # Else? :: Don't show that.
-
-	#### Click Apply Label
-	$applyLabel = New-Object System.Windows.Forms.Label
-	$applyLabel.Location = New-Object System.Drawing.Point(4,160)
-	$applyLabel.Size = New-Object System.Drawing.Size(240,14)
-	$applyLabel.Text = "Click `"Apply`" or `"OK`" to apply changes"
-	$settingsBox.Controls.Add($applyLabel)
 
 	#### Examples Group Box
 	$exampleBox = New-Object System.Windows.Forms.GroupBox
@@ -657,6 +659,7 @@ If (!$ConfigFormPID) {
 
 	#### Apply: Writes data to the settings file.
 	Function applyButton_action {
+		### Portable Feature
 		# Determing if the settings files should be in a portable location or not.
 		$newPortable = ($settingsBox.Controls | Where-Object {$_.Name -eq "setPortable"}).Checked
 		
@@ -688,6 +691,33 @@ If (!$ConfigFormPID) {
 			}
 		}
 		
+		### Autorun Feature
+		# See if the user wants to autorun the script.
+		$setAutorun = ($settingsBox.Controls | Where-Object {$_.Name -eq "setAutorun"}).Checked
+		
+		# See if the Registry entry exists
+		$autorunExists = (Get-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Run -Name HawtKoners -ErrorAction SilentlyContinue).HawtKoners
+		
+		# If the autorun is chosen to be set, then what should the path be?
+		$runCmd = "$($ENV:SYSTEMROOT)\System32\cmd.exe /c START /min `"`" powershell.exe -WindowStyle Hidden -ExecutionPolicy ByPass -File `"$($ENV:mainScript)`""
+		
+		# If user want to set autorun, and it's already set, make sure that it's set correctly.
+		If ($setAutorun -and $autorunExists) {
+			If ($autorunExists -ne $runCmd) {
+				# If the current value doesn't equal what it should, then we can update it to the new.
+				# Call the function to do this.
+				autorun $runCmd
+			} # Else: There's notihng to do; it's already set correctly and well.
+		} ElseIf ($setAutorun -and !$autorunExists) {
+			# If the user wants it, and it's not set, then call the function to set it.
+			autorun $runCmd
+		} ElseIf (!$setAutorun -and $autorunExists) {
+			# If the user doesn't want it set, but it is set, then remove it.
+			autorun $false
+		} # Else: It's not set, and the user wants to keep it not set.
+			
+		
+		### Settings File
 		# Creating new settings file.
 		New-Item -ItemType File -Path "$($ENV:hktCfgPath)/settings.csv" -Force -Confirm:$false | Out-Null
 

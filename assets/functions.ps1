@@ -52,3 +52,13 @@ Function monDat {
 		}
 	}
 }
+
+Function autorun {
+	Param($runCmd)
+	
+	If ($runCmd) {
+		Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Run -Name HawtKoners -Value "$runCmd"
+	} Else {
+		Remove-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Run -Name HawtKoners
+	}
+}

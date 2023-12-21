@@ -1,5 +1,4 @@
------------------------------
-
+----------------------------------------------------------
 ----- Corners Buffers: -----
 How close to the corner should the mouse get
 before corner action occurs. Setting this to
@@ -8,32 +7,33 @@ perfectly on the nose. That's typially okay,
 but not when you're remoted into your system
 from another.
 
------------------------------
-
-Rest Time:
+----------------------------------------------------------
+----- Rest Time: -----
 How long should the program wait before performing
 another action. Setting this higher allows for
 avoiding accidentl double taps, but setting
 too low can make you question your existance.
 
------------------------------
-
-Identifier Timer:
+----------------------------------------------------------
+----- Identifier Timer: -----
 How long to keep the on-screen display
 identifers, uhh... on the screen. Setting this
 to `"0`" will keep them open until this configuration
 tool closes.
 
------------------------------
-
-Open the Config Tool on Start
+----------------------------------------------------------
+----- Open the Config Tool on Start -----
 Keeping this checked will show this configuration
 tool everytime the program is launched. Uncheck
 it to only show the configuration tool when you
 call it from the SysTray.
 
------------------------------
+----------------------------------------------------------
+----- Run at login ----- 
+Calls the program to run when your account logs
+into Windows.
 
+----------------------------------------------------------
 ----- Portable Configuraiton -----
 This option does not display when the program is
 running from a location where the user running the
@@ -44,8 +44,8 @@ base program. There's no guarantee this will work
 between systems, though.... It's more for a
 backup / historical purposes. 
 
------------------------------
-
+----------------------------------------------------------
+----- Powershell Command -----
 The Powershell Command feature is this command:
 	Start-Process -WindowStyle Hidden -FilePath "powershell.exe" -ArgumentList "-command ```"`$cmd```""
 Where `$cmd = "Whatever-You-Have-Placed-There"
@@ -54,19 +54,13 @@ So, for example:
 To start the system's currently selected screensaver:
 	& (Get-ItemProperty 'HKCU:Control Panel\Desktop').{SCRNSAVE.EXE}
 
------------------------------
 
-Where's the option to start this when my computer
-starts?
-It doesn't exist. This program is a PowerShell file, not
-an EXE file, because I don't know how to digitally
-sign an EXE file to stop virus scanners. Instead the
-solution is to make a task in Window's Task
-Scheduler.
+----------------------------------------------------------
+----- Saving -----
+Any setting changed won't take effect until you click
+either the "OK" button or the "Apply" button. The
+difference between the two is that the "OK" button
+will close the configuraiton tool after saving, while
+the "Apply" button keeps it open.
 
-Triggers Tab:
-	Begin the task: At log on
 
-Action tab:
-	Program/script: C:\Windows\System32\cmd.exe
-	Add arguments: /c START /min `"`" powershell.exe -WindowStyle Hidden -ExecutionPolicy ByPass -File `"C:\Path\to\HKT Folder\hawtKoners.ps1`"
