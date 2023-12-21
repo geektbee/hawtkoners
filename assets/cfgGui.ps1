@@ -625,7 +625,7 @@ If (!$ConfigFormPID) {
 	$scripter = New-Object System.Windows.Forms.Label
 	$scripter.Location = New-Object System.Drawing.Point(4,36)
 	$scripter.Size = New-Object System.Drawing.Size(200,14)
-	$scripter.Text = "www.github.com/websiteCanGoHere"
+	$scripter.Text = "https://github.com/geektbee/hawtkoners"
 	$creditsBox.Controls.Add($scripter)
 
 	############
