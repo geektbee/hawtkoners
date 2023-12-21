@@ -33,7 +33,7 @@ The "Identify" button in action, shows which Tab goes with which display. Does n
 
 ![image](https://github.com/geektbee/hawtkoners/assets/16610859/664e943a-9b77-450e-8cab-91b99fcb4de5)
 
-The "Settings" tab: Mostly just a places for some little helpers and conveniences. 
+The "Settings" tab: Mostly just a place for some little helpers and conveniences. 
 
 ![image](https://github.com/geektbee/hawtkoners/assets/16610859/04c912b6-d11c-4537-b256-ae93bcbc0df1)
 
